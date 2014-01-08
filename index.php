@@ -33,6 +33,22 @@ $app->post('/feed', function () {
 	}
 });
 
+$app->get("/productform/:product_id", function ($product_id) use ($smarty) {
+	$pdo = getDbHandler();
+	$sql = "SELECT * FROM product WHERE id = :id ";
+	$sth = $pdo->prepare($sql);
+	$sth->execute(array(':id' => $product_id));
+	
+	$row = $sth->fetch(PDO::FETCH_ASSOC);
+	
+	$smarty->assign('product', $row);
+	$smarty->display("payment_form.tpl");
+});
+
+$app->get("/donateform", function () {
+	$smarty->display("payment_form.tpl");
+});
+
 $app->notFound(function () use ($app, $smarty) {
 	$app->redirect(".");
 	return true;

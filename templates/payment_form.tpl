@@ -1,18 +1,26 @@
-<form name="payFormCcard" method="post" action="https://ipay.bangkokbank.com/b2c/eng/payment/payForm.jsp">
+{if $smarty.const.SANDBOX}
+<form name="payFormCcard" method="post" action="{$smarty.const.TEST}">
+{else}
+<form name="payFormCcard" method="post" action="{$smarty.const.PRODUCTION}">
+{/if}
 
-<input type="hidden" name="merchantId" value="1">
+<input type="hidden" name="merchantId" value="{$smarty.const.MERCHANT_ID}">
 
-<input type="hidden" name="amount" value="3000.0" > 
+{if $product.is_donation eq "1"}
+	<input type="text" name="amount" value="0" />
+{else}
+	<input type="hidden" name="amount" value="{$product.amount}" /> 
+{/if}
 
-<input type="hidden" name="orderRef" value="000000000014">
+<input type="hidden" name="orderRef" value="{$order.id}">
 
 <input type="hidden" name="currCode" value="344" > 
 
-<input type="hidden" name="successUrl" value="http://www.yourdomain.com/Success.html">
+<input type="hidden" name="successUrl" value="{$smarty.const.URL_SUCCESS}">
 
-<input type="hidden" name="failUrl" value="http://www.yourdomain.com/Fail.html"> 
+<input type="hidden" name="failUrl" value="{$smarty.const.URL_FAIL}"> 
 
-<input type="hidden" name="cancelUrl" value="http://www.yourdomain.com/Cancel.html">
+<input type="hidden" name="cancelUrl" value="{$smarty.const.URL_CANCEL}">
 
 <input type="hidden" name="payType" value="N"> 
 
