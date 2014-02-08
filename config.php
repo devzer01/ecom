@@ -15,5 +15,15 @@ define('TEST', 'https://psipay.bangkokbank.com/b2c/eng/payment/payForm.jsp');
 
 define('MERCHANT_ID', 2563);
 
+define('DBHOST', 'localhost');
+define('DBNAME', 'ecom');
+define('DBUSER', 'root');
+define('DBPASS', '');
+
+define('URL_SUCCESS', 'https://ecom/success');
+define('URL_FAIL', 'https://ecom/error');
+define('URL_CANCEL', 'https://ecom/cancel');
+
+
 //set this to false when running production in environment
 define('SANDBOX', true);
