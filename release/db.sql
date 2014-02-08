@@ -1,0 +1,1 @@
+ALTER TABLE product ADD dollar_price DECIMAL(10,2) AFTER price;

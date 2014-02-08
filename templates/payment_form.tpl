@@ -4,9 +4,10 @@
 <h2>Customer Information</h2>
 
 Please enter your name, email address. <br/>
-Then verify the total order amount is correct. <br/>
 {if $is_donation eq "1"}
 Verify your donation amount <br/>
+{else}
+Then verify the total order amount is correct. <br/>
 {/if}
 Then press the Submit button 
 
@@ -32,16 +33,23 @@ Then press the Submit button
 
 {if $is_donation eq "1"}
 <div class="form-group">
+    <label for="amount2">Product Name:</label>
+    Donation
+</div>  	
+<div class="form-group">
     <label for="amount">Donation Amount (Bhat):</label>
     <input type="text" class="form-control" id="amount" name="amount" placeholder="Donation Amount" autocomplete="off" required />
 </div>  
 {else}
 <div class="form-group">
+    <label for="amount2">Product Name:</label>
+    {$product.name}
+</div>  	
+<div class="form-group">
     <label for="amount">Order Total (Bhat):</label>
     {{$product.price}}
     <input type="hidden" id='amount' name="amount" value="{$product.price}" />
-</div>  	
-	 
+</div>  		 
 {/if}
 
 <input type="hidden" id='order_id' name="orderRef" value="">
@@ -79,7 +87,7 @@ Then press the Submit button
 			e.preventDefault();
 			
 			var attr = {};
-			attr.url = '/addorder';
+			attr.url = 'addorder';
 			attr.type = 'post';
 			attr.data = { 'customer_name': $("#customer_name").val(), 
 						  'email' : $("#email_address").val(), 

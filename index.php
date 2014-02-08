@@ -48,7 +48,7 @@ $app->get("/cancel", function () {
 $app->post('/addorder', function () use ($app) {
 	
 	$pdo = getDbHandler();
-	$sql = "INSERT INTO `order` (product_id, amount, customer_name, email, created_date) VALUES (:product_id, :amount, :customer_name, :email,now()) ";
+	$sql = "INSERT INTO `order` (product_id, amount, customer_name, email, status, created_date) VALUES (:product_id, :amount, :customer_name, :email, 'pending', now()) ";
 	$sth = $pdo->prepare($sql);
 	$sth->execute(array(':product_id' => $_POST['product_id'], ':amount' => $_POST['amount'], ':customer_name' => $_POST['customer_name'], ':email' => $_POST['email']));
 	
@@ -73,8 +73,85 @@ $app->get("/product/:product_id", function ($product_id) use ($smarty) {
 	$smarty->display("payment_form.tpl");
 });
 
-$app->get("/donate", function () {
+if (isset($_SESSION['auth']) && $_SESSION['auth'] == 1) {
+
+	$app->get('/orders', function () use ($smarty) {
+		
+		$pdo = getDbHandler();
+		$sql = "SELECT * FROM `order` WHERE product_id != 0";
+		$sth = $pdo->prepare($sql);
+		$sth->execute();
+		
+		$orders = $sth->fetchAll();
+		
+		$smarty->assign('orders', $orders);
+		$smarty->display('orders.tpl');
+	});
+	
+	$app->get('/donations', function () use ($smarty) {
+	
+		$pdo = getDbHandler();
+		$sql = "SELECT * FROM `order` WHERE product_id = 0";
+		$sth = $pdo->prepare($sql);
+		$sth->execute();
+	
+		$orders = $sth->fetchAll();
+	
+		$smarty->assign('orders', $orders);
+		$smarty->display('donations.tpl');
+	});
+	
+	$app->post('/addproduct', function () use ($app) {
+		
+		$pdo = getDbHandler();
+		$sql = "INSERT INTO product (name, price, dollar_price, created_date) VALUES (:name, :price, :dollar_price, NOW())";
+		$sth = $pdo->prepare($sql);
+		$sth->execute(array(':name' => $_POST['name'], ':price' => $_POST['price'], ':dollar_price' => $_POST['dollar_price']));
+		
+		$app->redirect('products');
+	});
+	
+	$app->get('/products', function () use ($smarty) {
+		$pdo = getDbHandler();
+		$sql = "SELECT * FROM `product`";
+		$sth = $pdo->prepare($sql);
+		$sth->execute();
+		
+		$orders = $sth->fetchAll();
+		
+		$smarty->assign('products', $orders);
+		
+		
+		$smarty->display('products.tpl');
+	});
+	
+	$app->get('/logout', function () use ($app) {
+		session_destroy();
+		session_regenerate_id(true);
+		$app->redirect('login');
+	});
+}
+	
+$app->post('/login', function() use ($app) {
+	
+	if ($_POST['password'] == 'secret') {
+		$_SESSION['auth'] = 1;
+		$app->redirect('orders');
+		return;
+	}
+	
+	$app->redirect('login');
+});
+
+
+$app->get('/login', function () use ($smarty) {
+	$smarty->display('login.tpl');
+});
+
+$app->get("/donate", function () use ($smarty) {
 	$smarty->assign('is_donation', 1);
+	$product = array('id' => 0);
+	$smarty->assign('product', $product);
 	$smarty->display("payment_form.tpl");
 });
 
