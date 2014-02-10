@@ -7,7 +7,7 @@
 	<!-- Bootstrap -->
 	<base href='{$smarty.const.BASE_URL}'>
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<script src="/js/jquery-1.10.2.min.js"></script>
+	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" >
 	    if(typeof String.prototype.trim !== 'function') {
