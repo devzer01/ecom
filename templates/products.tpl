@@ -14,15 +14,19 @@ Configure the products in the system
   	<td>Bhat Amount</td>
   	<td>Dollar Amount</td>
   	<td>Date</td>
+  	<td>Payment URL</td>
+  	<td>Action</td>
   </tr>
   
   {foreach from=$products item=product}
   	<tr>
 	  	<td>{$product.id}</td>
 	  	<td>{$product.name}</td>
-	  	<td>{$product.price}</td>
-	  	<td>{$product.dollar_price}</td>
+	  	<td>{$product.price|number_format}</td>
+	  	<td>{$product.dollar_price|number_format}</td>
 	  	<td>{$product.created_date}</td>
+	  	<td>{$smarty.const.BASE_URL}product/{$product.id}</td>
+	  	<td>[ <a href='edit/product/{$product.id}'>Edit</a> ] [ <a href='delete/product/{$product.id}'>Delete</a> ] </td>
   	</tr>
   {/foreach}
 </table>

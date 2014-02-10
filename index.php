@@ -111,6 +111,38 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] == 1) {
 		$app->redirect('products');
 	});
 	
+	$app->get('/delete/product/:id', function ($id) use ($app) {
+		
+		$pdo = getDbHandler();
+		$sql = "DELETE FROM product WHERE id = :id";
+		$sth = $pdo->prepare($sql);
+		$sth->execute(array(':id' => $id));
+		
+		$app->redirect('products');
+	});
+	
+	$app->get('/edit/product/:id', function ($id) use ($smarty) {
+		
+		$pdo = getDbHandler();
+		$sql = "SELECT * FROM product WHERE id = :id";
+		$sth = $pdo->prepare($sql);
+		$sth->execute(array(':id' => $id));
+		
+		$product = $sth->fetch(PDO::FETCH_ASSOC);
+		$smarty->assign('product', $product);
+		$smarty->display('edit_product.tpl');
+	});
+	
+	$app->post('/update/product', function () use ($app) {
+		
+		$pdo = getDbHandler();
+		$sql = "UPDATE product SET name = :name, price = :price, dollar_price = :dollar_price WHERE id = :id ";
+		$sth = $pdo->prepare($sql);
+		$sth->execute(array(':name' => $_POST['name'], ':price' => $_POST['price'], ':dollar_price' => $_POST['dollar_price'], ':id' => $_POST['id']));
+
+		$app->redirect('products');
+	});
+	
 	$app->get('/products', function () use ($smarty) {
 		$pdo = getDbHandler();
 		$sql = "SELECT * FROM `product`";

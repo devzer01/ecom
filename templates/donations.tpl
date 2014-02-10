@@ -4,7 +4,10 @@
 
 <div class='well'>
 <h2>Donations</h2>
-List of donations that have been placed through the system.
+List of donations that have been placed through the system. <br/>
+
+URL to accept donations is {$smarty.const.BASE_URL}donate/
+
 </div>
 
 <table class="table table-striped">

@@ -13,6 +13,7 @@ List of orders that have been placed through the system.
   	<td>Customer Name</td>
   	<td>Email</td>
   	<td>Total</td>
+  	<td>Product</td>
   	<td>Date</td>
   	<td>Status</td>
   </tr>
@@ -22,7 +23,8 @@ List of orders that have been placed through the system.
 	  	<td>{$order.id}</td>
 	  	<td>{$order.customer_name}</td>
 	  	<td>{$order.email}</td>
-	  	<td>{$order.amount}</td>
+	  	<td>{$order.amount|number_format}</td>
+	  	<td>{$order.product_id}</td>
 	  	<td>{$order.created_date}</td>
 	  	<td>{$order.status}</td>
   	</tr>
