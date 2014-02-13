@@ -24,7 +24,7 @@ List of orders that have been placed through the system.
 	  	<td>{$order.customer_name}</td>
 	  	<td>{$order.email}</td>
 	  	<td>{$order.amount|number_format}</td>
-	  	<td>{$order.product_id}</td>
+	  	<td>{$products[$order.product_id]}</td>
 	  	<td>{$order.created_date}</td>
 	  	<td>{$order.status}</td>
   	</tr>

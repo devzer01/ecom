@@ -105,6 +105,19 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] == 1) {
 		
 		$orders = $sth->fetchAll();
 		
+		$sql = "SELECT * FROM product";
+		$sth = $pdo->prepare($sql);
+		$sth->execute();
+		
+		$products = $sth->fetchAll();
+		
+		$smt_products = array();
+		
+		foreach ($products as $product) {
+			$smt_products[$product['id']] = $product['name'];
+		}
+		
+		$smarty->assign('products', $smt_products);
 		$smarty->assign('orders', $orders);
 		$smarty->display('orders.tpl');
 	});
