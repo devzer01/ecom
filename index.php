@@ -5,6 +5,7 @@ require_once('config.php');
 require_once 'vendor/autoload.php';
 require_once('smarty3/Smarty.class.php');
 require_once('db.php');
+require_once('lib.php');
 
 date_default_timezone_set('Asia/Bangkok');
 
@@ -53,7 +54,18 @@ $app->get("/success", function () {
 	$sth = $pdo->prepare($sql);
 	$sth->execute(array(':id' => $_GET['Ref']));
 	
-	echo "Print Receipt Here and Send Email";
+	$sql = "SELECT * FROM `order` WHERE id = :id ";
+	$sth = $pdo->prepare($sql);
+	$sth->execute(array(':id' => $_GET['Ref']));
+	
+	$order = $sth->fetch(PDO::FETCH_ASSOC);
+	
+	$subject = "Your Order with AACCU.COOP";
+	$message = sprintf("Your Order %d Has Been Approved, Your credit card was charged Baht %s", $order['id'], number_format($order['amount'], 2));
+	
+	sendMail($order['email'], $subject, $message);
+	
+	printf("Your order has been approved, you will receive a confirmation email shortly");
 });
 
 $app->get("/cancel", function () {
