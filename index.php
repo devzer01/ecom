@@ -1,5 +1,6 @@
 <?php 
 session_start();
+error_reporting(E_ALL & ~E_STRICT);
 header("Access-Control-Allow-Origin:*");
 require_once('config.php');
 require_once 'vendor/autoload.php';
