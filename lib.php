@@ -16,7 +16,7 @@ function sendMail($email, $subject, $message)
 	$params["password"] = MAIL_PASSWORD;
 	$headers['MIME-Version'] = '1.0';
 	$headers['Content-type'] = 'text/html; charset=utf8';
-	$headers['From'] = "slbeat@corp-gems.com";
+	$headers['From'] = "accumail@aaccu.coop";
 	$headers['To'] = $email;
 	$headers['Subject'] = "=?utf-8?B?".base64_encode($subject)."?=";
 
