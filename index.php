@@ -26,23 +26,44 @@ $app->post('/feed', function () {
 		
 	Echo “OK”;
 	
-	If ($successCode = "0") {
+	$fp = fopen("payment.log", "w+");
 	
+	If ($successCode = "0") {
+		fprintf($fp, "Payment Successful for Order %s, with Reference %s\n", $payRef, $Ref);
 	}else{
-		
+		fprintf($fp, "Payment Error for Order %s, with Reference %s\n", $payRef, $Ref);
 	}
+	
+	fclose($fp);
 });
 
 $app->get("/error", function () {
-	echo "Error";
+	$pdo = getDbHandler();
+	$sql = "UPDATE `order` SET status = 'declined' WHERE id = :id";
+	$sth = $pdo->prepare($sql);
+	$sth->execute(array(':id' => $_GET['Ref']));
+	
+	echo "Your credit card didn't work";
 });
 
 $app->get("/success", function () {
-	echo "Success";
+	//https://aaccu.coop/ecom/success?Ref=13&Ref1=Test%20Name&Ref2=nayana@corp-gems.com&Ref3=1&Ref4=add-ref-00004&Ref5=add-ref-00005
+	$pdo = getDbHandler();
+	$sql = "UPDATE `order` SET status = 'approved' WHERE id = :id";
+	$sth = $pdo->prepare($sql);
+	$sth->execute(array(':id' => $_GET['Ref']));
+	
+	echo "Print Receipt Here and Send Email";
 });
 
 $app->get("/cancel", function () {
-	echo "Cancel";
+	
+	$pdo = getDbHandler();
+	$sql = "UPDATE `order` SET status = 'canceled' WHERE id = :id";
+	$sth = $pdo->prepare($sql);
+	$sth->execute(array(':id' => $_GET['Ref']));
+	
+	echo "Show Cancel Error Message Here";
 });
 
 $app->post('/addorder', function () use ($app) {
