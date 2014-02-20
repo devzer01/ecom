@@ -37,7 +37,7 @@ Then press the Submit button
     Donation
 </div>  	
 <div class="form-group">
-    <label for="amount">Donation Amount (Bhat):</label>
+    <label for="amount">Donation Amount ($):</label>
     <input type="text" class="form-control" id="amount" name="amount" placeholder="Donation Amount" autocomplete="off" required />
 </div>  
 {else}
@@ -46,9 +46,9 @@ Then press the Submit button
     {$product.name}
 </div>  	
 <div class="form-group">
-    <label for="amount">Order Total (Bhat):</label>
-    {{$product.price_dollar}}
-    <input type="hidden" id='amount' name="amount" value="{$product.price_dollar}" />
+    <label for="amount">Order Total ($):</label>
+    {{$product.dollar_price}}
+    <input type="hidden" id='amount' name="amount" value="{$product.dollar_price}" />
 </div>  		 
 {/if}
 
