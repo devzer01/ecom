@@ -47,14 +47,14 @@ Then press the Submit button
 </div>  	
 <div class="form-group">
     <label for="amount">Order Total (Bhat):</label>
-    {{$product.price}}
-    <input type="hidden" id='amount' name="amount" value="{$product.price}" />
+    {{$product.price_dollar}}
+    <input type="hidden" id='amount' name="amount" value="{$product.price_dollar}" />
 </div>  		 
 {/if}
 
 <input type="hidden" id='order_id' name="orderRef" value="">
 
-<input type="hidden" name="currCode" value="764" > 
+<input type="hidden" name="currCode" value="840" > 
 
 <input type="hidden" name="successUrl" value="{$smarty.const.URL_SUCCESS}">
 
