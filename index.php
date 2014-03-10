@@ -20,13 +20,13 @@ $smarty->setCacheDir('cache/');
 
 $app->post('/feed', function () {
 	
-	$successCode = $HTTP_POST_VARS[‘successcode’];
+	$successCode = $HTTP_POST_VARS[���successcode���];
 	
-	$payRef = $HTTP_POST_VARS[‘PayRef’];
+	$payRef = $HTTP_POST_VARS[���PayRef���];
 	
-	$Ref = $HTTP_POST_VARS[‘Ref’];
+	$Ref = $HTTP_POST_VARS[���Ref���];
 		
-	Echo “OK”;
+	Echo ���OK���;
 	
 	$fp = fopen("payment.log", "w+");
 	
@@ -112,7 +112,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] == 1) {
 	$app->get('/orders', function () use ($smarty) {
 		
 		$pdo = getDbHandler();
-		$sql = "SELECT * FROM `order` WHERE product_id != 0";
+		$sql = "SELECT * FROM `order` WHERE product_id NOT IN (0, 100)";
 		$sth = $pdo->prepare($sql);
 		$sth->execute();
 		
@@ -147,6 +147,19 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] == 1) {
 		$smarty->assign('orders', $orders);
 		$smarty->display('donations.tpl');
 	});
+	
+	$app->get('/dues', function () use ($smarty) {
+		
+			$pdo = getDbHandler();
+			$sql = "SELECT * FROM `order` WHERE product_id = 100";
+			$sth = $pdo->prepare($sql);
+			$sth->execute();
+		
+			$orders = $sth->fetchAll();
+		
+			$smarty->assign('orders', $orders);
+			$smarty->display('dues.tpl');
+		});
 	
 	$app->post('/addproduct', function () use ($app) {
 		
@@ -233,6 +246,13 @@ $app->get("/donate", function () use ($smarty) {
 	$smarty->assign('product', $product);
 	$smarty->display("payment_form.tpl");
 });
+
+$app->get("/due", function () use ($smarty) {
+		$smarty->assign('is_donation', 2);
+		$product = array('id' => 100);
+		$smarty->assign('product', $product);
+		$smarty->display("payment_form.tpl");
+	});
 
 $app->get("/", function () {
 	echo "ACCU ECOM GW 0.1";

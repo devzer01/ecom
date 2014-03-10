@@ -16,6 +16,7 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="orders">Orders</a></li>
         <li><a href="donations">Donations</a></li>
+        <li><a href="dues">Dues</a></li>
         <li><a href="products">Products</a></li>
         <li><a href="logout">Logout</a></li>
      </ul>
