@@ -64,7 +64,8 @@ $app->get("/success", function () {
 	$subject = "Your Order with AACCU.COOP";
 	$message = sprintf("Your Order %d Has Been Approved, Your credit card was charged Baht %s", $order['id'], number_format($order['amount'], 2));
 	
-	sendMail($order['email'], $subject, $message);
+	//sendMail($order['email'], $subject, $message);
+	mail($order['email'], $subject, $message, "From: accumail@aaccu.coop\r\n");
 	
 	printf("Your order has been approved, you will receive a confirmation email shortly");
 });
