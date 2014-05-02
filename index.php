@@ -62,7 +62,7 @@ $app->get("/success", function () {
 	$order = $sth->fetch(PDO::FETCH_ASSOC);
 	
 	$subject = "Your Order with AACCU.COOP";
-	$message = sprintf("Your Order %d Has Been Approved, Your credit card was charged Baht %s", $order['id'], number_format($order['amount'], 2));
+	$message = sprintf("Your Order %d Has Been Approved, Your credit card was charged US$ %s", $order['id'], number_format($order['amount'], 2));
 	
 	sendMail($order['email'], $subject, $message);
 	
