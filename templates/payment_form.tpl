@@ -6,6 +6,8 @@
 Please enter your name, email address. <br/>
 {if $is_donation eq "1"}
 Verify your donation amount <br/>
+{elseif $is_donation eq "2"}
+Verify your dues amount <br/>
 {else}
 Then verify the total order amount is correct. <br/>
 {/if}
@@ -39,6 +41,15 @@ Then press the Submit button
 <div class="form-group">
     <label for="amount">Donation Amount ($):</label>
     <input type="text" class="form-control" id="amount" name="amount" placeholder="Donation Amount" autocomplete="off" required />
+</div>  
+{elseif $is_donation eq "2"}
+<div class="form-group">
+    <label for="amount2">Product Name:</label>
+    Member Dues
+</div>  	
+<div class="form-group">
+    <label for="amount">Dues Amount ($):</label>
+    <input type="text" class="form-control" id="amount" name="amount" placeholder="Dues Amount" autocomplete="off" required />
 </div>  
 {else}
 <div class="form-group">
